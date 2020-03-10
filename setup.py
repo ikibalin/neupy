@@ -55,6 +55,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Operating System :: OS Independent",
+        "License :: OSI Approved :: MIT License"
     ],    
     include_package_data=True,
     packages=find_packages(),  #same as name
