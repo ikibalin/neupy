@@ -226,9 +226,11 @@ def calc_peak_shape_function(alphas, betas, sigmas,
     beta = beta0 + beta1 / d**4
 
     if peak_shape == "Gauss":
-        sigma0, sigma1 = sigmas[0], sigmas[1]
+        #sigma0, sigma1 = sigmas[0], sigmas[1]
+        sigma0, sigma1, sigma2 = sigmas[0], sigmas[1], sigmas[2]
+        #sigma = sigma0 + sigma1 * d
+        sigma = sigma0 + sigma1 * d + sigma2 * numpy.square(d)
 
-        sigma = sigma0 + sigma1 * d
         res_2d = tof_Jorgensen(alpha, beta, sigma, time, time_hkl)
     else:  # peak_shape == "pseudo-Voigt"
         sigma0, sigma1, sigma2 = sigmas[0], sigmas[1], sigmas[2]
