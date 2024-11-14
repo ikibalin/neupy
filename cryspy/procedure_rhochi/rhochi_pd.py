@@ -111,17 +111,17 @@ def calc_chi_sq_for_pd_by_dictionary(
         if sthovl_max >= 1.:
             sthovl_max =  0.99999/wavelength
         
-    background_ttheta = dict_pd["background_ttheta"]
-    background_intensity = dict_pd["background_intensity"]
-    flags_background_intensity = dict_pd["flags_background_intensity"]
+#    background_ttheta = dict_pd["background_ttheta"]
+#    background_intensity = dict_pd["background_intensity"]
+#    flags_background_intensity = dict_pd["flags_background_intensity"]
 
-    flag_background_intensity = numpy.any(flags_background_intensity)
-    if (flag_use_precalculated_data and ("signal_background" in dict_in_out) and not(flag_background_intensity)):
-        signal_background = dict_in_out["signal_background"]
-    else:
-        signal_background, dder_s_bkgr = calc_background(ttheta, background_ttheta, background_intensity,
-            flag_background_intensity= (flag_background_intensity and flag_calc_analytical_derivatives))
-        dict_in_out["signal_background"] = signal_background
+#    flag_background_intensity = numpy.any(flags_background_intensity)
+#    if (flag_use_precalculated_data and ("signal_background" in dict_in_out) and not(flag_background_intensity)):
+#        signal_background = dict_in_out["signal_background"]
+#    else:
+#        signal_background, dder_s_bkgr = calc_background(ttheta, background_ttheta, background_intensity,
+#            flag_background_intensity= (flag_background_intensity and flag_calc_analytical_derivatives))
+#        dict_in_out["signal_background"] = signal_background
 
     pd_phase_name = dict_pd["phase_name"]
     pd_phase_scale = dict_pd["phase_scale"]
@@ -422,7 +422,8 @@ def calc_chi_sq_for_pd_by_dictionary(
     n_point = 0
     if flag_chi_sq_sum:
         in_points = numpy.logical_not(excluded_points)
-        total_signal_sum = total_signal_plus + total_signal_minus + signal_background
+        #total_signal_sum = total_signal_plus + total_signal_minus + signal_background
+        total_signal_sum = total_signal_plus + total_signal_minus
         chi_sq_sum = ((numpy.square((signal_exp - total_signal_sum)/signal_sigma)*in_points)).sum(axis=0)
         chi_sq += chi_sq_sum
         n_point += numpy.sum(in_points)
@@ -455,8 +456,8 @@ def calc_chi_sq_for_pd_by_dictionary(
             parameter_name = [(crystal_type_name, ) + way + (tuple(ind_1d[ind,:]), ) for ind in range(ind_1d.shape[0])]
             l_parameter_name.extend(parameter_name)
     
-    if flag_background_intensity:
-        pass
+    #if flag_background_intensity:
+    #    pass
 
     der_chi_sq = numpy.zeros((len(l_parameter_name), ), dtype=float) 
     dder_chi_sq = numpy.zeros((len(l_parameter_name), len(l_parameter_name)), dtype=float)
