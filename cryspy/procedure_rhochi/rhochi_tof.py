@@ -29,7 +29,7 @@ from cryspy.A_functions_base.powder_diffraction_tof_zcode import \
     calc_profile_by_zcode_parameters
 
 from .rhochi_diffrn import get_flags
-from .rhochi_pd import calc_background
+#from .rhochi_pd import calc_background
 
 na = numpy.newaxis
 
@@ -141,34 +141,34 @@ def calc_chi_sq_for_tof_by_dictionary(
         flags_beam_polarization, flags_flipper_efficiency = False, False
 
     dict_tof_keys = dict_tof.keys()
-    if "background_coefficients" in dict_tof_keys:
-        background_coefficients = dict_tof["background_coefficients"]
-        flags_background_coefficients = dict_tof["flags_background_coefficients"]
+#    if "background_coefficients" in dict_tof_keys:
+#        background_coefficients = dict_tof["background_coefficients"]
+#        flags_background_coefficients = dict_tof["flags_background_coefficients"]
 
-        flag_background_coefficients = numpy.any(flags_background_coefficients)
-        if (flag_use_precalculated_data and ("signal_background" in dict_in_out) and not(flag_background_coefficients)):
-            signal_background = dict_in_out["signal_background"]
-        else:
-            signal_background, dder_s_bkgr = calc_background_by_cosines(time, background_coefficients,
-                                                                        flag_background_coefficients=(flag_background_coefficients and flag_calc_analytical_derivatives))
-            dict_in_out["signal_background"] = signal_background
-    elif "background_time" in dict_tof_keys:
-        background_time = dict_tof["background_time"]
-        background_intensity = dict_tof["background_intensity"]
-        flags_background_intensity = dict_tof["flags_background_intensity"]
-        flag_background_intensity = numpy.any(flags_background_intensity)
-        if (flag_use_precalculated_data and ("signal_background" in dict_in_out) and not(flag_background_intensity)):
-            signal_background = dict_in_out["signal_background"]
-        else:
-            signal_background, dder_s_bkgr = calc_background(
-                time,
-                background_time,
-                background_intensity,
-                flag_background_intensity=(flag_background_intensity and flag_calc_analytical_derivatives))
-            dict_in_out["signal_background"] = signal_background
-    else:
-        signal_background = numpy.zeros_like(time)
-        dict_in_out["signal_background"] = signal_background
+#        flag_background_coefficients = numpy.any(flags_background_coefficients)
+#        if (flag_use_precalculated_data and ("signal_background" in dict_in_out) and not(flag_background_coefficients)):
+#            signal_background = dict_in_out["signal_background"]
+#        else:
+#            signal_background, dder_s_bkgr = calc_background_by_cosines(time, background_coefficients,
+#                                                                        flag_background_coefficients=(flag_background_coefficients and flag_calc_analytical_derivatives))
+#            dict_in_out["signal_background"] = signal_background
+#    elif "background_time" in dict_tof_keys:
+#        background_time = dict_tof["background_time"]
+#        background_intensity = dict_tof["background_intensity"]
+#        flags_background_intensity = dict_tof["flags_background_intensity"]
+#        flag_background_intensity = numpy.any(flags_background_intensity)
+#        if (flag_use_precalculated_data and ("signal_background" in dict_in_out) and not(flag_background_intensity)):
+#            signal_background = dict_in_out["signal_background"]
+#        else:
+#            signal_background, dder_s_bkgr = calc_background(
+#                time,
+#                background_time,
+#                background_intensity,
+#                flag_background_intensity=(flag_background_intensity and flag_calc_analytical_derivatives))
+#            dict_in_out["signal_background"] = signal_background
+#    else:
+#        signal_background = numpy.zeros_like(time)
+#        dict_in_out["signal_background"] = signal_background
 
     if "spectrum_incident_type" in dict_tof_keys:
         spectrum_incident_type = dict_tof["spectrum_incident_type"]
@@ -475,7 +475,8 @@ def calc_chi_sq_for_tof_by_dictionary(
     n_point = 0
     if flag_chi_sq_sum:
         in_points = numpy.logical_not(excluded_points)
-        total_signal_sum = total_signal_plus + total_signal_minus + signal_background
+        #total_signal_sum = total_signal_plus + total_signal_minus + signal_background
+        total_signal_sum = total_signal_plus + total_signal_minus
         chi_sq_sum = ((numpy.square(
             (signal_exp - total_signal_sum)/signal_sigma)*in_points)).sum(axis=0)
         chi_sq += chi_sq_sum
